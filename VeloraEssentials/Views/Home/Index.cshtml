@@ -1,0 +1,44 @@
+@model List<Product>
+@{
+    ViewData["Title"] = "Shop";
+}
+
+<div class="p-4 mb-4 rounded velora-hero">
+    <h1 class="fw-bold">Period care, made comfortable</h1>
+    <p class="mb-0">Browse our essentials for every day of the month.</p>
+</div>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">No products available right now.</p>
+}
+
+<div class="row g-3">
+    @foreach (var p in Model)
+    {
+        <div class="col-12 col-sm-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+                @if (!string.IsNullOrWhiteSpace(p.ImageUrl))
+                {
+                    <img src="@p.ImageUrl" class="card-img-top" alt="@p.Name" />
+                }
+                <div class="card-body">
+                    <span class="badge bg-secondary mb-2">@p.Category</span>
+                    <h5 class="card-title">@p.Name</h5>
+                    <p class="card-text text-muted">@p.Description</p>
+                </div>
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                    <strong>&#8377;@p.Price.ToString("0.00")</strong>
+                    @if (p.StockQuantity > 0)
+                    {
+                        <span class="text-success small">In stock</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger small">Out of stock</span>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
